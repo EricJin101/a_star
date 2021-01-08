@@ -95,9 +95,6 @@ class AStar:
             self.add_child_to_open_list(x, y, child)
             self.sequencing_cost_f()
             _coordinate = self.open_list[0]
-            _child = self.sort_cost_f(child)
-            # check 8 child node is best or not
-
             self.add_to_close_list(x, y, _coordinate)
             x = _coordinate['itself'][0]
             y = _coordinate['itself'][1]
@@ -109,16 +106,6 @@ class AStar:
         for c in _child:
             if self.child_valid_check(_child[c]):
                 pass
-
-    # def add_to_close_list(self, x, y, _child):
-    #     if not self.check_in_close_list(_child['itself'][0], _child['itself'][1]):
-    #         self.close_list.append({
-    #             'father': [x, y], 'itself': _child['itself'],
-    #             'cost': _child['cost']
-    #         })
-    #     del self.open_list[0]
-    #     if self.check_in_open_list(_child['itself'][0], _child['itself'][1]):
-    #         pass
 
     def add_to_close_list(self, x, y, _child):
         if not self.check_in_close_list(_child['itself'][0], _child['itself'][1]):
@@ -219,15 +206,6 @@ class AStar:
                     child['es']['f'] = child['es']['h'] + child['es']['g']
         return child
 
-    def sort_cost_f(self, child_list):
-        f = MAX_INT
-        p = []
-        for i in child_list:
-            if child_list[i]['f'] < f and self.global_path[child_list[i]['x'] - 1][child_list[i]['y'] - 1][5] != 'O':
-                f = child_list[i]['f']
-                p = child_list[i]
-        return p
-
     def sequencing_cost_f(self):
         if len(self.open_list) < 0:
             self.find_path = True
@@ -263,12 +241,12 @@ class AStar:
         return False
 
     def compare_child_node_cost_g(self, x, y, _child):
-        for c in range(len(self.open_list)):
-            if self.open_list[c]['itself'] == [_child['x'], _child['y']]:
-                if self.open_list[c]['cost'][1] > _child['g']:
-                    self.open_list[c]['cost'][1] = _child['g']
-                    self.open_list[c]['cost'][0] = _child['g'] + _child['h']
-                    self.open_list[c]['father'] = [x, y]
+        # for c in range(len(self.open_list)):
+        #     if self.open_list[c]['itself'] == [_child['x'], _child['y']]:
+        #         if self.open_list[c]['cost'][1] > _child['g']:
+        #             self.open_list[c]['cost'][1] = _child['g']
+        #             self.open_list[c]['cost'][0] = _child['g'] + _child['h']
+        #             self.open_list[c]['father'] = [x, y]
         for c in range(len(self.close_list)):
             if self.close_list[c]['itself'] == [_child['x'], _child['y']]:
                 if self.close_list[c]['cost'][1] < _child['g']:
