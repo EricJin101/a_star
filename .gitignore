@@ -2,3 +2,7 @@
 *.pyc
 venv/
 __pycache__/
+CMakeCache.txt
+CMakeFiles/
+cmake-build-debug/
+cmake_install.cmake
