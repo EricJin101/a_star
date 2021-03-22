@@ -4,7 +4,7 @@
 #include "map_process.h"
 namespace eric{
 namespace a_star{
-void map_process::map_generate (const GlobalMap& global_map){
+void map_process::map_generate (GlobalMap &global_map){
     cout << "Map generating ..." << endl;
     ifstream myfile("./maps/123.txt");
     ofstream outfile("out.txt",ios::app); //ios::app指追加写入
@@ -19,6 +19,7 @@ void map_process::map_generate (const GlobalMap& global_map){
     }
     myfile.close();
     outfile.close();
+
 
 }
 

@@ -25,7 +25,7 @@ namespace eric {
         public:
             typedef vector<GlobalMap> global_map;
 
-            void map_generate(const GlobalMap &global_map);
+            static void map_generate(GlobalMap &global_map);
         };
     }
 }
