@@ -7,25 +7,14 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include "../utils/path.h"
 using namespace std;
 namespace eric {
     namespace a_star {
-        struct PathPoint
-        {
-            double x;
-            double y;
-            double cost;
-        };
-
-        struct GlobalMap : PathPoint
-        {
-            PathPoint pt;
-        };
         class map_process {
         public:
-            typedef vector<GlobalMap> global_map;
-
-            static void map_generate(GlobalMap &global_map);
+            static void map_generate(path::global_map& globalMap, path::map_info mapInfo);
+            static void coordination_confirm(path::map_info& mapInfo, path::global_map& globalMap, string map_line, int row);
         };
     }
 }

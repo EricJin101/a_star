@@ -1,9 +1,11 @@
 #include "maps/map_process.cc"
-
+#include "a_star_algo/AStar.cc"
 int main()
 {
     cout << "A Start Algorithm Starting ..." << endl;
     eric::a_star::map_process mapProcess;
-    eric::a_star::GlobalMap globalMap{};
-    mapProcess.map_generate(globalMap);
+//    mapProcess.map_generate();
+    eric::aStarAlgorithm::Init();
+    eric::aStarAlgorithm::core_aStar(1,2);
+    return 0;
 }
