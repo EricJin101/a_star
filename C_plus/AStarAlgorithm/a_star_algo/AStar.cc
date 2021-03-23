@@ -35,6 +35,12 @@ namespace aStarAlgorithm {
 
     }
 
+    void compare_child_node_cost_g()
+    {
+
+    }
+
+
     int current_idx(int x, int y)
     {
         return x + mapInfo.boundary.first * y;
@@ -111,10 +117,25 @@ namespace aStarAlgorithm {
                     temp.cost_h = childList[i].cost_h;
                     openList.push_back(temp);
                     update_global_path(x,y,i);
+                }else
+                {
+                    // compare child node,which one has a smaller g
+                    for (int idx_open{0}; idx_open < openList.size(); ++i)
+                    {
+                        if (childList[i].current.x == openList[idx_open].current.x
+                            && childList[i].current.y == openList[idx_open].current.y
+                            && openList[idx_open].cost_g  > childList[i].cost_g)
+                        {
+                            openList[idx_open].historical.x = x;
+                            openList[idx_open].historical.y = y;
+                            openList[idx_open].cost_g = childList[i].cost_g;
+                            openList[idx_open].cost_f = openList[idx_open].cost_g + openList[idx_open].cost_h;
+                        }
+                    }
                 }
-            }else
-            {
-                // compare child node
+            }else{
+                // in close list
+                //compare_child_node_cost;
             }
         }
     }
