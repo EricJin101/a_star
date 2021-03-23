@@ -13,7 +13,7 @@ namespace eric {
     namespace a_star {
         class map_process {
         public:
-            static void map_generate(path::global_map& globalMap, path::map_info mapInfo);
+            static void map_generate(path::global_map& globalMap, path::map_info& mapInfo);
             static void coordination_confirm(path::map_info& mapInfo, path::global_map& globalMap, string map_line, int row);
         };
     }

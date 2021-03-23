@@ -4,7 +4,7 @@
 #include "map_process.h"
 namespace eric{
 namespace a_star{
-void map_process::map_generate (path::global_map& globalMap, path::map_info mapInfo)
+void map_process::map_generate (path::global_map& globalMap, path::map_info& mapInfo)
 {
     cout << "Map generating ..." << endl;
     ifstream myfile("./maps/223.txt");
