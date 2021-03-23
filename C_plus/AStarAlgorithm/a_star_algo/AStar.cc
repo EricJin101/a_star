@@ -20,6 +20,7 @@ namespace aStarAlgorithm {
     {
         //UPDATE ALL G
         int idx = mapInfo.map_start.first + mapInfo.map_start.second * 5;
+        // 初始化所有代价
         for (int i{0}; i < mapInfo.boundary.second; ++i)
         {
             for (int j{0}; j < mapInfo.boundary.first; ++j)
@@ -31,6 +32,7 @@ namespace aStarAlgorithm {
                 globalMap[temp_id].cost_h = h;
             }
         }
+
     }
 
     void core_aStar(int x, int y)
