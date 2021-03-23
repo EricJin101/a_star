@@ -45,9 +45,24 @@ namespace aStarAlgorithm {
         return abs(x1 - x2) + abs(y1 - y2);
     }
 
-    bool check_in_close_list()
+    bool check_in_open_list(int x, int y)
     {
+        for (int i{0}; i < openList.size(); ++i)
+        {
+            if (openList[i].current.x == x && openList[i].current.y == y)
+            { return true;}
+        }
+        return false;// can not find a point in close list
+    }
 
+    bool check_in_close_list(int x, int y)
+    {
+        for (int i{0}; i < closeList.size(); ++i)
+        {
+            if (closeList[i].current.x == x && closeList[i].current.y == y)
+            { return true;}
+        }
+        return false;// can not find a point in close list
     }
 
     bool check_child_valid(path::PathList pathList)
@@ -63,7 +78,16 @@ namespace aStarAlgorithm {
         return false;
     }
 
-    void add_child_to_openlist()
+    void update_global_path(int x, int y, int child_idx)
+    {
+        globalMap[current_idx(x, y)].x = x;
+        globalMap[current_idx(x, y)].y = y;
+        globalMap[current_idx(x, y)].cost_f = childList[child_idx].cost_f;
+        globalMap[current_idx(x, y)].cost_g = childList[child_idx].cost_g;
+        globalMap[current_idx(x, y)].cost_h = childList[child_idx].cost_h;
+    }
+
+    void add_child_to_openlist(int x, int y)
     {
         for(int i = 0; i>childList.size(); ++i)
         {
@@ -72,10 +96,28 @@ namespace aStarAlgorithm {
             {
                 continue;
             }
-
+            if (!check_in_close_list(childList[i].current.x, childList[i].current.y))
+            {
+                if (!check_in_open_list(childList[i].current.x, childList[i].current.y))
+                {
+                    // update open list
+                    path::PathList temp;
+                    temp.current.x = childList[i].current.x;
+                    temp.current.y = childList[i].current.y;
+                    temp.historical.x = x;
+                    temp.historical.y = y;
+                    temp.cost_f = childList[i].cost_f;
+                    temp.cost_g = childList[i].cost_g;
+                    temp.cost_h = childList[i].cost_h;
+                    openList.push_back(temp);
+                    update_global_path(x,y,i);
+                }
+            }else
+            {
+                // compare child node
+            }
         }
     }
-
 
     void eight_direction(int x, int y)
     {// 0 - 7, 8个方向。东、东北、北、西北、西、西南、南、东南
@@ -106,6 +148,7 @@ namespace aStarAlgorithm {
         {
             double g = globalMap[mapInfo.map_start.first + mapInfo.map_start.second * 5].cost_g;
             eight_direction(x, y);
+            add_child_to_openlist(x, y);
         }
 
     }

@@ -15,6 +15,8 @@ namespace aStarAlgorithm{
         path::global_map globalMap;
         path::map_info mapInfo;
         child_list childList;
+        open_list openList;
+        close_list closeList;
         static void Init();
 }
 }
