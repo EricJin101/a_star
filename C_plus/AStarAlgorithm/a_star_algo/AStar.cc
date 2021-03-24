@@ -154,6 +154,7 @@ namespace aStarAlgorithm {
                             openList[idx_open].historical.y = y;
                             openList[idx_open].cost_g = childList[i].cost_g;
                             openList[idx_open].cost_f = openList[idx_open].cost_g + openList[idx_open].cost_h;
+                            update_global_path(x, y, i);
                         }
                     }
                 }
@@ -223,6 +224,36 @@ namespace aStarAlgorithm {
                     globalMap[3 + i * 5].historical.x << ", " << globalMap[3 + i * 5].historical.y << ";  " <<
                     globalMap[4 + i * 5].historical.x << ", " << globalMap[4 + i * 5].historical.y << ";  " <<endl;
         }
+        bool pain{false};
+        int x = mapInfo.map_end.first;
+        int y = mapInfo.map_end.second;
+        while (!pain)
+        {
+            if (globalMap[current_idx(x, y)].type == 'e')
+            {
+                x = globalMap[current_idx(x, y)].historical.x;
+                y = globalMap[current_idx(x, y)].historical.y;
+            }else if (globalMap[current_idx(x, y)].type == 's')
+            {
+                pain = true;
+            }else if (globalMap[current_idx(x, y)].type == '#')
+            {
+                int _x{0}, _y{0};
+                _x = globalMap[current_idx(x, y)].historical.x;
+                _y = globalMap[current_idx(x, y)].historical.y;
+                globalMap[current_idx(x, y)].type = ' ';
+                x = _x;
+                y = _y;
+            }
+        }
+        for (int i{0}; i < 5; ++i)
+        {
+            cout << globalMap[0 + i * 5].type << ";  " <<
+                 globalMap[1 + i * 5].type << ";  " <<
+                 globalMap[2 + i * 5].type << ";  " <<
+                 globalMap[3 + i * 5].type << ";  " <<
+                 globalMap[4 + i * 5].type << ";  " <<endl;
+        }
     }
 
     void core_aStar(int x, int y)
@@ -234,7 +265,6 @@ namespace aStarAlgorithm {
         cout << "done " << endl;
         while (!findPath)
         {
-            double g = globalMap[mapInfo.map_start.first + mapInfo.map_start.second * 5].cost_g;
             eight_direction(x, y);
             add_child_to_openlist(x, y);
             sequencing_cost_f();
