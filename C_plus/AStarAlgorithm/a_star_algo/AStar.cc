@@ -35,9 +35,18 @@ namespace aStarAlgorithm {
 
     }
 
-    void update_father_node()
+    void update_father_node(int x, int y, int id_child)
     {
         //
+        for (int id_close{0}; id_close < closeList.size(); ++id_close)
+        {
+            if (closeList[id_close].current.x == childList[id_child].current.x
+                    && closeList[id_close].current.y == childList[id_child].current.y)
+            {
+                closeList[id_close].historical.x = x;
+                closeList[id_close].historical.y = y;
+            }
+        }
     }
 
     void compare_child_node_cost_g(int x, int y, int child_id)
@@ -48,7 +57,7 @@ namespace aStarAlgorithm {
             if (closeList[id_close].x == x && closeList[id_close].y ==y
                     && closeList[id_close].cost_g < childList[child_id].cost_g)
             {
-                update_father_node();
+                update_father_node(x, y, child_id);
             }
         }
     }
