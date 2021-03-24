@@ -5,7 +5,7 @@ namespace eric{
 namespace aStarAlgorithm {
     void Init()
     {
-        cout << "Initializing open_list, close_list, global_map..." << endl;
+//        cout << "Initializing open_list, close_list, global_map..." << endl;
         open_list openList{};
         close_list closeList{};
         findPath = false;
@@ -202,7 +202,7 @@ namespace aStarAlgorithm {
         for (int i{0}; i < 8; ++i)
         {
             path::PathList point{};
-            cout << "sin: " << round(sin(i * 45* M_PI / 180)) << endl;
+//            cout << "sin: " << round(sin(i * 45* M_PI / 180)) << endl;
             double delta_x = round(cos(i * 45* M_PI / 180));
             double delta_y = round(sin(i * 45* M_PI / 180));
             point.current.x = x + delta_x >= 0 ? x + delta_x : -1;
@@ -261,22 +261,26 @@ namespace aStarAlgorithm {
         // x y 即将处理的点，默认为起点
         cout << "findPath" << findPath << endl;
         data_prepare();
+        clock_t start,end;//定义clock_t变量
+        start = clock();
         initialize_root_node();
-        cout << "done " << endl;
+//        cout << "done " << endl;
         while (!findPath)
         {
             eight_direction(x, y);
             add_child_to_openlist(x, y);
             sequencing_cost_f();
             path::PathList coordinate{};
-            cout << openList[0].current.x << endl;
+//            cout << openList[0].current.x << endl;
             coordinate = openList[0];
             coordinate.current.y = openList.begin()->current.y;
             add_to_close_list(x, y, coordinate);
             x = coordinate.current.x;
             y = coordinate.current.y;
         }
-        cout << "find path : " << findPath << endl;
+//        cout << "find path : " << findPath << endl;
+        end = clock();
+        cout<<"time = "<<double(end-start)/CLOCKS_PER_SEC<<"s"<<endl;
         print_global_path();
     }
 }

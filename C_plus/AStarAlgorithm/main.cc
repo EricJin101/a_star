@@ -1,5 +1,6 @@
 #include "maps/map_process.cc"
 #include "a_star_algo/AStar.cc"
+#include <time.h>
 int main()
 {
     cout << "A Start Algorithm Starting ..." << endl;

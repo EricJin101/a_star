@@ -6,15 +6,15 @@ namespace eric{
 namespace a_star{
 void map_process::map_generate (path::global_map& globalMap, path::map_info& mapInfo)
 {
-    cout << "Map generating ..." << endl;
+//    cout << "Map generating ..." << endl;
     ifstream myfile("./maps/223.txt");
     ofstream outfile("out.txt",ios::app); //ios::app指追加写入
     string temp;
     int i{0};
     while(getline(myfile,temp)) //按行读取字符串
     {
-        cout << "line : " << i << endl;
-        cout << temp << endl;
+//        cout << "line : " << i << endl;
+//        cout << temp << endl;
         coordination_confirm(mapInfo, globalMap, temp, i);
         outfile<<temp;//写文件
         outfile<<endl;
@@ -54,9 +54,9 @@ void map_process::map_generate (path::global_map& globalMap, path::map_info& map
                 mapInfo.map_end.second = row;
             }
             globalMap.push_back(pathPoint);
-            cout << "x_coordinate: " << x_coord << endl;
+//            cout << "x_coordinate: " << x_coord << endl;
         }
-        cout << "map generate finished" << endl;
+//        cout << "map generate finished" << endl;
     }
 
 
