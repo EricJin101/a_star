@@ -6,6 +6,6 @@ int main()
     eric::a_star::map_process mapProcess;
 //    mapProcess.map_generate();
     eric::aStarAlgorithm::Init();
-    eric::aStarAlgorithm::core_aStar(1,2);
+    eric::aStarAlgorithm::core_aStar(0,2);
     return 0;
 }

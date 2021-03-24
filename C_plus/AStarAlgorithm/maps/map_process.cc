@@ -28,7 +28,9 @@ void map_process::map_generate (path::global_map& globalMap, path::map_info& map
 
 }
 
-    void map_process::coordination_confirm(path::map_info& mapInfo,path::global_map& globalMap,string map_line, int row) {
+    void map_process::coordination_confirm(path::map_info& mapInfo,
+            path::global_map& globalMap,
+            string map_line, int row) {
         path::PathList pathPoint{};
         for (int x_coord{0}; x_coord < map_line.size(); x_coord ++)
         {
@@ -58,5 +60,9 @@ void map_process::map_generate (path::global_map& globalMap, path::map_info& map
     }
 
 
+    void print_map()
+    {
+
+    }
 }
 }
