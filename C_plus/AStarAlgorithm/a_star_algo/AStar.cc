@@ -96,9 +96,9 @@ namespace aStarAlgorithm {
 
     bool check_child_valid(path::PathList pathList)
     {
-        if ((pathList.current.x > 0) && (pathList.current.y > 0 ) && globalMap[current_idx(pathList.current.x, pathList.current.y)].type != 'O')
+        if ((pathList.current.x >= 0) && (pathList.current.y >= 0 ) && globalMap[current_idx(pathList.current.x, pathList.current.y)].type != 'O')
         {
-            if (globalMap[current_idx(pathList.current.x, pathList.current.y)].type != 'O')
+            if (globalMap[current_idx(pathList.current.x, pathList.current.y)].type == 'e')
             {
                 findPath = true;
             }
@@ -109,11 +109,12 @@ namespace aStarAlgorithm {
 
     void update_global_path(int x, int y, int child_idx)
     {
-        globalMap[current_idx(x, y)].x = x;
-        globalMap[current_idx(x, y)].y = y;
-        globalMap[current_idx(x, y)].cost_f = childList[child_idx].cost_f;
-        globalMap[current_idx(x, y)].cost_g = childList[child_idx].cost_g;
-        globalMap[current_idx(x, y)].cost_h = childList[child_idx].cost_h;
+        int idx = current_idx(childList[child_idx].current.x, childList[child_idx].current.y);
+        globalMap[idx].historical.x = x;
+        globalMap[idx].historical.y = y;
+        globalMap[idx].cost_f = childList[child_idx].cost_f;
+        globalMap[idx].cost_g = childList[child_idx].cost_g;
+        globalMap[idx].cost_h = childList[child_idx].cost_h;
     }
 
     void add_child_to_openlist(int x, int y)
@@ -143,7 +144,7 @@ namespace aStarAlgorithm {
                 }else
                 {
                     // compare child node,which one has a smaller g
-                    for (int idx_open{0}; idx_open < openList.size(); ++i)
+                    for (int idx_open{0}; idx_open < openList.size(); ++idx_open)
                     {
                         if (childList[i].current.x == openList[idx_open].current.x
                             && childList[i].current.y == openList[idx_open].current.y
@@ -181,7 +182,7 @@ namespace aStarAlgorithm {
         }
         for (int id_open{0}; id_open < openList.size(); ++id_open)
         {
-            for (int id_open_2{0}; id_open_2 < openList.size() - 1; ++id_open_2)
+            for (int id_open_2= id_open; id_open_2 < openList.size() - 1; ++id_open_2)
             {
                 if (openList[id_open].cost_f > openList[id_open_2].cost_f)
                 {
@@ -203,8 +204,8 @@ namespace aStarAlgorithm {
             cout << "sin: " << round(sin(i * 45* M_PI / 180)) << endl;
             double delta_x = round(cos(i * 45* M_PI / 180));
             double delta_y = round(sin(i * 45* M_PI / 180));
-            point.current.x = x + delta_x > 0 ? x + delta_x : -1;
-            point.current.y = y + delta_y > 0 ? y + delta_y : -1;
+            point.current.x = x + delta_x >= 0 ? x + delta_x : -1;
+            point.current.y = y + delta_y >= 0 ? y + delta_y : -1;
             point.cost_g = globalMap[current_idx(x, y)].cost_g + sqrt(delta_x * delta_x + delta_y * delta_y);
             point.cost_h = manhattan_dis(point.current.x, point.current.y, mapInfo.map_end.first, mapInfo.map_end.second);
             point.cost_f = point.cost_g + point.cost_h;
@@ -212,6 +213,17 @@ namespace aStarAlgorithm {
         }
     }
 
+    void print_global_path()
+    {
+        for (int i{0}; i < 5; ++i)
+        {
+            cout << globalMap[0 + i * 5].historical.x << ", " << globalMap[0 + i * 5].historical.y << ";  " <<
+                    globalMap[1 + i * 5].historical.x << ", " << globalMap[1 + i * 5].historical.y << ";  " <<
+                    globalMap[2 + i * 5].historical.x << ", " << globalMap[2 + i * 5].historical.y << ";  " <<
+                    globalMap[3 + i * 5].historical.x << ", " << globalMap[3 + i * 5].historical.y << ";  " <<
+                    globalMap[4 + i * 5].historical.x << ", " << globalMap[4 + i * 5].historical.y << ";  " <<endl;
+        }
+    }
 
     void core_aStar(int x, int y)
     {
@@ -235,7 +247,7 @@ namespace aStarAlgorithm {
             y = coordinate.current.y;
         }
         cout << "find path : " << findPath << endl;
-
+        print_global_path();
     }
 }
 }
